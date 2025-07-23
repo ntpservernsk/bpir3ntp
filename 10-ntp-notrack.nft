@@ -1,0 +1,8 @@
+chain raw_prerouting {
+   type filter hook prerouting priority raw;
+   udp dport 123 notrack counter comment "Disable conntrack for NTP"
+}
+chain raw_output {
+   type filter hook output priority raw;
+   udp sport 123 notrack counter comment "Disable conntrack for NTP"
+}

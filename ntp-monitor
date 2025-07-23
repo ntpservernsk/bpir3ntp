@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# plot every PLOT_INTERVAL minute
+PLOT_INTERVAL=1
+
+if ! pid=$(pgrep chronyd); then
+    echo "chronyd is not running. Exiting."
+    exit 1
+fi
+
+#utime = field 14, stime = field 15
+time=$(cat /proc/$pid/stat | cut -d ' ' -f 14,15 | tr ' ' ':')
+#requests received and dropped
+reqs=$(chronyc -c serverstats | cut -d ',' -f 1,2 | tr ',' ':')
+#packets received
+in=$(nft list chain inet fw4 raw_prerouting | grep -m1 NTP | cut -d ' ' -f 7,9 | tr ' ' ':')
+#packets sent
+out=$(nft list chain inet fw4 raw_output | grep -m1 NTP | cut -d ' ' -f 7,9 | tr ' ' ':')
+#chrobny tracking, ms and ppm values
+tracking=$(chronyc -c tracking | cut -d ',' -f 5,6,7,8,9,10,11,12,13 | tr ',' ':')
+
+rrdtool update "/tmp/stats/ntp_stats.rrd" "N:$time:$reqs:$in:$out:$tracking"
+
+# plot every PLOT_INTERVAL minute
+if [ $(($(date +%M) % $PLOT_INTERVAL)) -eq 0 ]; then
+    /usr/bin/ntp-plot /tmp/stats 24h
+fi

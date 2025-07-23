@@ -1,0 +1,23 @@
+config server
+	option hostname 'ntp1.fau.de'
+
+config server
+	option hostname 'ntp0.nl.net'
+
+config server
+	option hostname 'time.esa.int'
+	option iburst 'yes'
+
+
+config allow
+	option interface 'lan'
+
+config allow
+	option interface 'wan'
+
+config allow
+	option interface 'wan_6'
+
+config makestep
+	option threshold '1.0'
+	option limit '3'

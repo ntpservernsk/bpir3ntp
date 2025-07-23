@@ -1,0 +1,25 @@
+#/bin/sh
+
+mkdir -p /tmp/stats
+
+rrdtool create /tmp/stats/ntp_stats.rrd \
+  --step 60 \
+  --start now \
+  DS:utime:DERIVE:120:0:U \
+  DS:stime:DERIVE:120:0:U \
+  DS:requests_recv:DERIVE:120:0:U \
+  DS:requests_drop:DERIVE:120:0:U \
+  DS:packets_in:DERIVE:120:0:U \
+  DS:bytes_in:DERIVE:120:0:U \
+  DS:packets_out:DERIVE:120:0:U \
+  DS:bytes_out:DERIVE:120:0:U \
+  DS:system_time:GAUGE:120:U:U \
+  DS:last_offset:GAUGE:120:U:U \
+  DS:rms_offset:GAUGE:120:0:U \
+  DS:frequency:GAUGE:120:U:U \
+  DS:residual_freq:GAUGE:120:U:U \
+  DS:skew:GAUGE:120:0:U \
+  DS:root_delay:GAUGE:120:0:U \
+  DS:root_dispersion:GAUGE:120:0:U \
+  DS:update_interval:GAUGE:120:0:U \
+  RRA:AVERAGE:0.5:1:4320
