@@ -106,6 +106,15 @@ This disables pointless tracking for UDP/123 traffic and allows connection stati
 
 Start and enable the service: `/etc/init.d/chronyd start; /etc/init.d/chronyd enable`.
 
+When adding your server to the pool, do not start with the maximum load. Begin with the lowest available setting (currently 512 Kbit). Only after confirming stable operation should you gradually increase the load.
+
+I recommend waiting until the pool assigns your server a score of 20.0 before raising the load. This score serves as a reliable external indicator of successful operation.
+
+Important note about load values:
+The numbers shown in the dropdown menu (e.g., 512 Kbit, 1 Gbit) do not directly represent actual traffic volume. However, they are useful for estimating relative load increases when moving to the next tier.
+
+This gradual approach proved valuable in my case: it allowed me to detect the connection limit issue early and implement the necessary fixes before scaling further.
+
 ## Monitoring Sources & Dynamic Management
 Monitor upstream server status immediately using:
    ```
@@ -120,6 +129,8 @@ Monitor upstream server status immediately using:
 *   Delete: `chronyc delete <address>`
     **Crucial:** Use the IP address (`chronyc -n sources` output, note flag `-n`) or the *reverse DNS name* (`chronyc sources` output *without* flags) for deletion. The name used during addition (`-N` flag output) often doesn't work for deletion due to reverse lookups.
 *   Force Reselection: If a good server isn't selected for period of time: `chronyc reselect`. Servers will temporarily show `^-` before `^*`/`^+` reappear.
+
+Changes made with `chrony add`/`chrony delete` are volatile and lost on service restart.
 
 Once stable servers are identified via dynamic testing, add them to `/etc/config/chrony` using the example format. Add `option iburst 'yes'` to 1-2 primary servers for faster initial sync. Avoid enabling `iburst` for all servers.
 
