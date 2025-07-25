@@ -51,7 +51,7 @@ LINE2:kbits_out#00FF00:"Traffic out"
 rrdtool graph "$OUT_DIR/ntp_systime.png" \
 --title "Current offset between the NTP clock and system clock (ms)" \
 $COMMON_PARAMS \
---y-grid 0.2:1 \
+--alt-y-grid \
 DEF:system_time=$RRD_DB:system_time:AVERAGE \
 CDEF:val=system_time,1000,* \
 LINE2:val#FF0000:"System clock offset (ms)"
@@ -59,52 +59,39 @@ LINE2:val#FF0000:"System clock offset (ms)"
 rrdtool graph "$OUT_DIR/ntp_lastoffset.png" \
 --title "Estimated local offset on the last clock update (ms)" \
 $COMMON_PARAMS \
+--alt-y-grid \
 DEF:last_offset=$RRD_DB:last_offset:AVERAGE \
 CDEF:val=last_offset,1000,* \
 LINE2:val#00FF00:"Last offset (ms)"
-#--y-grid 0.2:1 \
-#--lower-limit -1.000 \
-#--upper-limit 1.000 \
-#--rigid \
 
 rrdtool graph "$OUT_DIR/ntp_rmsoffset.png" \
 --title "Long-term average of the offset value (ms)" \
 $COMMON_PARAMS \
+--alt-y-grid \
 --lower-limit 0.000 \
 DEF:rms_offset=$RRD_DB:rms_offset:AVERAGE \
 CDEF:val=rms_offset,1000,* \
 LINE2:val#0000FF:"RMS offset (ms)"
-#--y-grid 0.02:5 \
-#--upper-limit 0.300 \
-#--rigid \
 
 rrdtool graph "$OUT_DIR/ntp_freq.png" \
 --title "Rate by which the system's clock would be wrong if chronyd was not correcting it (ppm)" \
 $COMMON_PARAMS \
---y-grid 0.02:5 \
+--alt-y-grid \
 DEF:frequency=$RRD_DB:frequency:AVERAGE \
 LINE2:frequency#FF0000:"Frequency (ppm)"
-#--lower-limit -1073.500 \
-#--upper-limit -1073.100 \
-#--rigid \
 
 rrdtool graph "$OUT_DIR/ntp_resfreq.png" \
 --title "Difference between what the measurements from the reference source indicate the frequency should be and the frequency currently being used (ppm)" \
 $COMMON_PARAMS \
---lower-limit -0.100 \
---upper-limit 0.100 \
---rigid \
---y-grid 0.01:10 \
+--alt-y-grid \
 DEF:residual_freq=$RRD_DB:residual_freq:AVERAGE \
 LINE2:residual_freq#00FF00:"Residual freq (ppm)"
 
 rrdtool graph "$OUT_DIR/ntp_skew.png" \
 --title "Estimated error bound on the frequency (ppm)" \
 $COMMON_PARAMS \
+--alt-y-grid \
 --lower-limit 0.000 \
---upper-limit 0.100 \
---rigid \
---y-grid 0.01:10 \
 DEF:skew=$RRD_DB:skew:AVERAGE \
 LINE2:skew#0000FF:"Skew (ppm)"
 
@@ -112,7 +99,6 @@ rrdtool graph "$OUT_DIR/ntp_rootdelay.png" \
 --title "Total of the network path delays to the stratum-1 computer from which the computer is ultimately synchronised (ms)" \
 $COMMON_PARAMS \
 --lower-limit 0.000 \
---y-grid 1:5 \
 DEF:root_delay=$RRD_DB:root_delay:AVERAGE \
 CDEF:val=root_delay,1000,* \
 LINE2:val#FF00FF:"Root delay (ms)"
@@ -128,7 +114,7 @@ LINE2:val#00FFFF:"Root dispersion (ms)"
 rrdtool graph "$OUT_DIR/ntp_upd.png" \
 --title "Interval between the last two clock updates (min)" \
 $COMMON_PARAMS \
---lower-limit 0 \
+--lower-limit 0.000 \
 DEF:update_interval=$RRD_DB:update_interval:AVERAGE \
 CDEF:mins=update_interval,60,/ \
 LINE2:mins#00FF00:"Update interval (min)"
