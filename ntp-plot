@@ -1,7 +1,7 @@
 #!/bin/sh
 
 OUT_DIR=$1
-RRD_DB="$OUT_DIR/ntp_stats.rrd"
+RRD_DB="/tmp/stats/ntp_stats.rrd"
 COMMON_PARAMS="--start end-$2 --width 1000 --height 200 --units-exponent 0"
 export TZ='UTC'
 
