@@ -54,7 +54,8 @@ $COMMON_PARAMS \
 --alt-y-grid \
 DEF:system_time=$RRD_DB:system_time:AVERAGE \
 CDEF:val=system_time,1000,* \
-LINE2:val#FF0000:"System clock offset (ms)"
+LINE2:val#FF0000:"System clock offset (ms)" \
+HRULE:0.0#000000
 
 rrdtool graph "$OUT_DIR/ntp_lastoffset.png" \
 --title "Estimated local offset on the last clock update (ms)" \
@@ -62,7 +63,8 @@ $COMMON_PARAMS \
 --alt-y-grid \
 DEF:last_offset=$RRD_DB:last_offset:AVERAGE \
 CDEF:val=last_offset,1000,* \
-LINE2:val#00FF00:"Last offset (ms)"
+LINE2:val#00FF00:"Last offset (ms)" \
+HRULE:0.0#000000
 
 rrdtool graph "$OUT_DIR/ntp_rmsoffset.png" \
 --title "Long-term average of the offset value (ms)" \
@@ -85,7 +87,8 @@ rrdtool graph "$OUT_DIR/ntp_resfreq.png" \
 $COMMON_PARAMS \
 --alt-y-grid \
 DEF:residual_freq=$RRD_DB:residual_freq:AVERAGE \
-LINE2:residual_freq#00FF00:"Residual freq (ppm)"
+LINE2:residual_freq#00FF00:"Residual freq (ppm)" \
+HRULE:0.0#000000
 
 rrdtool graph "$OUT_DIR/ntp_skew.png" \
 --title "Estimated error bound on the frequency (ppm)" \
