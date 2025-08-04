@@ -18,7 +18,7 @@
 
 ## Preface
 
-I successfully configured a stable public Stratum 2 NTP server on a Banana Pi BPI-R3 router, integrating it into the [pool.ntp.org](https://ntppool.org) with maximum load provided by the pool. This was achieved without degrading the router's performance in my home network.
+I successfully configured a stable public Stratum 2 NTP server on a Banana Pi BPI-R3 router, integrating it into the [pool.ntp.org](https://ntppool.org) with maximum load provided by the pool for my DNS zone. This was achieved without degrading the router's performance in my home network.
 The router runs vanilla OpenWrt 24.10.2 firmware without third-party packages. All instructions apply to this version.
 
 [BPI-R3 official page](https://docs.banana-pi.org/en/BPI-R3/BananaPi_BPI-R3)
@@ -27,7 +27,7 @@ The NTP server software used is `chrony`. I was unable to get the standard `ntpd
 
 The issue likely stems from the very low precision of the router's clock oscillator. Unfortunately, this oscillator (as indicated by several reports on the official forum) exhibits a significant stable frequency offset for many (if not all) users. For instance, my unit has a consistent offset of approximately 1073 ppm, resulting in an error accumulation of about 1.5 minutes per day. Fortunately, the oscillator's frequency drift (instability) is very low (less than 0.1 ppm in my case), allowing chrony to successfully compensate for this stable offset down to zero. Consequently, the server's operation remains unaffected.
 
-CPU load averages around 10% (on one of four cores). Memory usage by the service is minimal. Inbound and outbound traffic reaches approximately 2 Mbps at around 4000 requests per second – the maximum load I achieved from the pool. UDP packet counts will roughly correspond to request volumes. The pool offers various load levels; choose one matching your capacity.
+CPU load averages around 10-15% (on one of four cores). Memory usage by the service is minimal. Inbound and outbound traffic reaches approximately 2 Mbps at around 4000 requests per second – the maximum load I achieved from the pool in RU zone. UDP packet counts will roughly correspond to request volumes. The pool offers various load levels; choose one matching your capacity.
 
 ## Configuration Guide
 
