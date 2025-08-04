@@ -161,7 +161,7 @@ I implemented a basic statistics system using `rrdtool1`.
 [/www/stats.html](stats.html): Example page displaying the graphs. Symlink generated PNGs into `/www` for browser access via LuCI/uHTTPd.
 
 **Persistence:**
-*   **Cron Backup:** Add to crontab: `0 1 * * * /bin/cp /tmp/stats/ntp_stats.rrd /mnt/opt/chrony` (Adjust path/interval).
+*   **Cron Backup:** Add to crontab: `0 */1 * * * /bin/cp /tmp/stats/ntp_stats.rrd /mnt/opt/chrony` (Adjust interval and path).
 *   **Restore on Boot:** Add to `/etc/rc.local`:
 ```
 mkdir -p /tmp/stats
