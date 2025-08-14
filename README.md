@@ -158,7 +158,7 @@ I implemented a basic statistics system using `rrdtool1`.
 
 [/usr/bin/ntp-plot](ntp-plot): Generates graphs using `rrdtool`. Called by `ntp-monitor` (set `PLOT_INTERVAL=1` in `ntp-monitor` to plot every minute). Specify output directory and time range (e.g., 24h, 72h).
 
-[/www/stats.html](stats/index.html): Example page displaying the graphs. Symlink generated PNGs into `/www` for browser access via LuCI/uHTTPd.
+[/www/stats.html](stats/index.html): Example page displaying the graphs. Symlink generated PNGs into `/www` for browser access via LuCI/uHTTPd. See [example](https://htmlpreview.github.io/?https://github.com/ntpservernsk/bpir3ntp/blob/main/stats/index.html) with PNGs from my router.
 
 **Persistence:**
 *   **Cron Backup:** Add to crontab: `0 */1 * * * /bin/cp /tmp/stats/ntp_stats.rrd /mnt/opt/chrony` (Adjust interval and path).
